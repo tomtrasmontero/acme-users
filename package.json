@@ -8,5 +8,15 @@
     "start": "node server.js"
   },
   "author": "Tom Trasmontero",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.0",
+    "method-override": "^2.3.6",
+    "pg": "^6.1.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.24.1",
+    "swig": "^1.4.2"
+  }
 }
