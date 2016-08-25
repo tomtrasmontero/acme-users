@@ -10,16 +10,47 @@ module.exports = router;
 
 // Customers Page
 router.get('/', function(req,res,next){
-	res.render('customers');
+	User.listCustomers()
+	.then(function(result){
+		res.render('customers',{users: result});
+	})
+	.catch(next);
 })
 
-// create a customer
-// router.post
-
-
+// create a customer createCustomer
+router.post('/', function(req,res,next){
+	User.createCustomer(req.body.name)
+	.then(function(result){
+		res.redirect('/customers/')
+	})
+	.catch(next);
+})
 
 //delete customer
-// router.delete
+router.delete('/:userId',function(req,res,next){
+	User.deleteUser(req.params.userId)
+	.then(function(result){
+		res.redirect('/customers/')
+	})
+	.catch(next);
+})
+
+router.put('/:userId',function(req,res,next){
+	User.customerToEmployee(req.params.userId)
+	.then(function(result){
+		res.redirect('/customers/')
+	})
+	.catch(next);
+})
+
+router.put('/:deptId/employee/:userId',function(req,res,next){
+	User.employeeToCustomer(req.params.userId)
+	.then(function(result){
+		res.redirect('/customers/')
+	})
+})
+
+
 
 
 

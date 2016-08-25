@@ -19,6 +19,33 @@ var User = db.define('user', {
 				deptId: deptId
 			})
 		},
+		createCustomer: function(name){
+			return User.create({
+				user: name
+			})
+		},
+		listCustomers: function(){
+			return User.findAll({
+				where: {
+					deptId: null
+				}
+			})
+		},
+		customerToEmployee: function(userId){
+			return Department.getDefault()
+			.then(function(result){
+				User.update({
+					deptId: result.id},
+					{where:{ id:userId}
+				})
+			})
+		},
+		employeeToCustomer: function(userId){
+			return User.update({
+				deptId: null},
+				{where:{ id: userId}
+			})
+		},
 		listUserInADept: function(deptId){
 			return User.findAll({
 				where:{
@@ -66,9 +93,6 @@ var Department = db.define('department', {
 			})	
 		}
 	},
-	// instanceMethods: {
-
-	// },
 	classMethods:{
 		getDefault: function(){
 			return Department.findOne({

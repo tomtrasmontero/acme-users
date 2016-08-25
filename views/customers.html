@@ -4,7 +4,7 @@
 <h2>Welcome to the Customers Page<h2>
 <hr/>
 <div class='well'>
-	<form method="POST" action='/customers/{{defaultDept.id}}/employee'>
+	<form method="POST" action='/customers/'>
 	<div class='form-group'>
 		<input class='form-control' name='name' placeholder="Customer Name"/>
 	</div>
@@ -23,16 +23,16 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for name in users%}
+			{% for customer in users%}
 			<tr>
-				<td>{{ name.user }}</td>
+				<td>{{ customer.user }}</td>
 				<td>
 					<div>
-					<form method="POST" action="/customers/{{name.deptId}}/employee/name.id">
-					<button type='submit' class='btn btn-primary'>Make Customer</button>
+					<form method="POST" action="/customers/{{customer.id}}?_method=PUT">
+					<button type='submit' class='btn btn-primary'>Make Employee</button>
 					</form>
 
-					<form method="POST" action="/departments/{{name.deptId}}/employee/{{ name.id }}?_method=DELETE">
+					<form method="POST" action="/customers/{{customer.id}}?_method=DELETE">
 					<button type='submit' class='btn btn-danger'> Delete Customer</button>
 					</form>
 					</div>
