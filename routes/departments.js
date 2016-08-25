@@ -12,7 +12,7 @@ module.exports = router;
 router.get('/',function(req,res,next){
 	Promise.all([Department.listAllDepartment(), Department.getDefault()])
 	.spread(function(deptList, defaultDept){
-		res.render('departments', {title: 'acme_users', departments:deptList, defaultDept:defaultDept});
+		res.render('departments', {title: 'acme_users', currentPage: 2, departments:deptList, defaultDept:defaultDept});
 	})
 	.catch(next);
 })
@@ -39,9 +39,8 @@ router.get('/:deptId', function(req,res,next){
 	.spread(function(deptList, defaultDept, userList, currentDept){
 		res.render('departments',
 		 {title: 'acme_users', showDept: req.params.deptId,
-			departments:deptList, 
-			defaultDept:defaultDept, 
-			users: userList,
+			departments:deptList, currentPage: 2,
+			defaultDept:defaultDept, users: userList,
 			currentDept: currentDept
 		});
 	})

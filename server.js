@@ -7,9 +7,9 @@ var User = models.User;
 var Department = models.Department;
 
 //require model index and sync up database before connecting to the server
-models.User.sync({})//force: true
+models.User.sync({force: true})//force: true
 .then(function(){
-	return models.Department.sync({}); 
+	return models.Department.sync({force: true}); 
 })
 .then(function(){
 	server.listen(process.env.PORT, function(){

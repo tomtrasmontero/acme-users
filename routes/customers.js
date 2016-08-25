@@ -12,7 +12,7 @@ module.exports = router;
 router.get('/', function(req,res,next){
 	User.listCustomers()
 	.then(function(result){
-		res.render('customers',{users: result});
+		res.render('customers',{users: result, currentPage: 3});
 	})
 	.catch(next);
 })

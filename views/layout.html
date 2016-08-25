@@ -8,9 +8,9 @@
 			<h1>Acme Company, Inc.</h1>
 		</div>
 		<ul class="nav nav-tabs" style="margin-bottom:10px">
-			<li> <a href='/'> Home </a> </li>
-			<li> <a href='/departments/{{defaultDept.id}}'> Departments </a> </li>
-			<li> <a href='/customers/'> Customers </a> </li>
+			<li {% if currentPage == 1 %} class="active" {% endif %}> <a href='/'> Home </a> </li>
+			<li {% if currentPage == 2 %} class="active" {% endif %}> <a href='/departments/{{defaultDept.id}}'> Departments </a> </li>
+			<li {% if currentPage == 3 %} class="active" {% endif %}> <a href='/customers/'> Customers </a> </li>
 		</ul>	
 
 		<div class="container">

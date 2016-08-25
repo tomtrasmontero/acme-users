@@ -24,7 +24,7 @@
 
 <ul class="nav nav-tabs" style="margin-bottom:10px">
 	{% for name in departments %}
-		<li class="list-group"> <a href='/departments/{{ name.id }}'>{{name.department}} </a></li>
+		<li class="list-group {% if currentDept.id == name.id%} active {% endif %}"> <a href='/departments/{{ name.id }}'>{{name.department}} </a></li>
 	{% endfor %}
 </ul>	
 

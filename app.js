@@ -34,7 +34,7 @@ module.exports = app;
 app.get('/',function(req,res,next){
 	Department.getDefault()
 	.then(function(result){
-		res.render("home", { header: 'Home' ,title: 'acme_users', defaultDept:result});
+		res.render("home", { header: 'Home' ,title: 'acme_users', currentPage: 1});
 	})
 	.catch(next);
 });
