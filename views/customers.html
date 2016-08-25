@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Welcome to the Customers Page<h2>
+<hr/>
+<div class='well'>
+	<form method="POST" action='/customers/{{defaultDept.id}}/employee'>
+	<div class='form-group'>
+		<input class='form-control' name='name' placeholder="Customer Name"/>
+	</div>
+	<button type='submit' class='btn btn-primary'> Save Customer </button>
+	</form>
+</div>	
+<hr/>
+
+
+<div class='well'>
+	<table class='table table-hover'>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for name in users%}
+			<tr>
+				<td>{{ name.user }}</td>
+				<td>
+					<div>
+					<form method="POST" action="/customers/{{name.deptId}}/employee/name.id">
+					<button type='submit' class='btn btn-primary'>Make Customer</button>
+					</form>
+
+					<form method="POST" action="/departments/{{name.deptId}}/employee/{{ name.id }}?_method=DELETE">
+					<button type='submit' class='btn btn-danger'> Delete Customer</button>
+					</form>
+					</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>					
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2> Welcome to the Homepage of {{ title }} </h2>
+<hr/>
+<div class='well'>
+	<form method='POST' action='/departments/'> 
+		<div class='form-group'>
+			<input class='form-control' name='department' placeholder='Enter Department Name'/>
+		</div>
+		<button type='sumbit' class='btn btn-danger'>Create Department</button>
+	</form>
+</div>
+
+{% endblock %}
