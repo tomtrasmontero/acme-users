@@ -1,5 +1,4 @@
 var express = require('express');
-var app = express();
 var swig = require('swig');
 var bodyParser = require('body-parser');
 var path = require('path');
@@ -12,6 +11,8 @@ var methodOverride = require('method-override');
 var Department = models.Department;
 
 
+var app = express();
+app.use(express.static(path.join(__dirname, 'node_modules')));
 //use swig
 swig.setDefaults({ cache:false});
 //set view engine to read html and use swig as the engine
@@ -20,8 +21,6 @@ app.engine('html', swig.renderFile);
 //use body parser to read url
 app.use(bodyParser.urlencoded({ extended: true}));
 //use express static to form directory easier
-app.use(express.static(path.join(__dirname, 'node_modules')));
-app.use(express.static(path.join(__dirname, 'views')));
 //use method override for delete
 app.use(methodOverride('_method'));
 
@@ -45,7 +44,7 @@ app.use('/customers/', routesCust);
 
 
 
-
+//you don't need this in customers and department
 app.use(function(err, req, res, next) {
 	console.log("Oh noes!!!!!");
 	console.log(err, err.stack);

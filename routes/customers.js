@@ -12,6 +12,7 @@ module.exports = router;
 router.get('/', function(req,res,next){
 	User.listCustomers()
 	.then(function(result){
+    //again magic number 3
 		res.render('customers',{users: result, currentPage: 3});
 	})
 	.catch(next);
@@ -20,44 +21,37 @@ router.get('/', function(req,res,next){
 // create a customer createCustomer
 router.post('/', function(req,res,next){
 	User.createCustomer(req.body.name)
-	.then(function(result){
+	.then(function(customer){
 		res.redirect('/customers/')
 	})
 	.catch(next);
 })
 
 //delete customer
-router.delete('/:userId',function(req,res,next){
-	User.deleteUser(req.params.userId)
+router.delete('/:id',function(req,res,next){
+	User.deleteUser(req.params.id)
 	.then(function(result){
 		res.redirect('/customers/')
 	})
 	.catch(next);
-})
+});
 
-router.put('/:userId',function(req,res,next){
-	User.customerToEmployee(req.params.userId)
-	.then(function(result){
-		res.redirect('/customers/')
+router.put('/:id',function(req,res,next){
+	User.customerToEmployee(req.params.id)
+	.then(function(employee){
+		res.redirect('/departments/' + employee.departmentId)
 	})
 	.catch(next);
-})
+});
 
-router.put('/:deptId/employee/:userId',function(req,res,next){
-	User.employeeToCustomer(req.params.userId)
+router.put('/:departmentId/employee/:id',function(req,res,next){
+	User.employeeToCustomer(req.params.id)
 	.then(function(result){
-		res.redirect('/customers/')
-	})
-})
+		res.redirect('/customers/');
+	});
+});
 
-
-
-
-
-
-
-
-
+//again put this in app.js
 router.use(function(err, req, res, next) {
 	console.log("Oh noes!!!!!");
 	console.log(err, err.stack);

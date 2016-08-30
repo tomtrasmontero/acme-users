@@ -17,19 +17,19 @@ var User = db.define('user', {
 			return User.create({
 				user: name,
 				deptId: deptId
-			})
+			});
 		},
 		createCustomer: function(name){
 			return User.create({
 				user: name
-			})
+			});
 		},
 		listCustomers: function(){
 			return User.findAll({
 				where: {
 					deptId: null
 				}
-			})
+			});
 		},
 		customerToEmployee: function(userId){
 			return Department.getDefault()
@@ -37,23 +37,24 @@ var User = db.define('user', {
 				User.update({
 					deptId: result.id},
 					{where:{ id:userId}
-				})
-			})
+				});
+			});
 		},
 		employeeToCustomer: function(userId){
 			return User.update({
 				deptId: null},
 				{where:{ id: userId}
-			})
+			});
 		},
 		listUserInADept: function(deptId){
 			return User.findAll({
 				where:{
 					deptId: deptId
 				}
-			})
+			});
 		},
 		deleteUser: function(userId){
+      //how about findById?
 			return User.findOne({
 				where:{
 					id: userId
@@ -61,37 +62,22 @@ var User = db.define('user', {
 			})
 			.then(function(result){
 				result.destroy();
-			})
-			.catch(function(err){
-				throw err;
 			});
 		}
 	}
 });
 
 var Department = db.define('department', {
+  //i would name this name
 	department: {
 		type: Sequelize.STRING
 	},
 	isDefault: {
-		type: Sequelize.ENUM('Yes','No'),
+		type: Sequelize.ENUM('Yes','No'),//only two values-- use a boolean
 		defaultValue: 'No'
 	}
 },{
 	hooks: {
-		beforeCreate: function(dept){
-// !!! need to return promise object since it is async, will get null if it is not returned
-			return Department.findAll({
-				where: {
-					isDefault: 'Yes'
-				}
-			})
-			.then(function(results){
-				if(results.length === 0){
-					dept.isDefault = 'Yes'
-				}
-			})	
-		}
 	},
 	classMethods:{
 		getDefault: function(){
@@ -100,6 +86,14 @@ var Department = db.define('department', {
 					isDefault: 'Yes'
 				}
 			})
+      .then(function(department){
+        if(department)
+          return department;
+        return Department.create({
+          name: 'Accounting',
+          isDefault: 'Yes'
+        });
+      });
 		},
 		createDept: function(dept){
 			return Department.findOrCreate({
@@ -109,9 +103,9 @@ var Department = db.define('department', {
 			})
 		},
 		listAllDepartment: function(){
-			return Department.findAll({});
+			return Department.findAll({});//necessary?
 		},
-		getCurrentDept: function(deptId){
+		getCurrentDept: function(deptId){//isnt this just findById
 			return Department.findOne({
 				where: {
 					id: deptId
@@ -128,6 +122,8 @@ var Department = db.define('department', {
 				isDefault: 'Yes'},
 				{where: {id: deptId}
 			});
+      //not good.... you don't know which will happen first if your second one happens before first you will have an issue..
+      //find the old one... update it.. then find the new one and update it.
 			return Promise.all([newDefaultDept, oldDefaultDept])
 		}
 	}
