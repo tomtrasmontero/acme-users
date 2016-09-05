@@ -2,7 +2,7 @@
 var Sequelize = require('sequelize');
 //requiring bluebird to use Promise.all
 var Promise = require('bluebird');
-var db = new Sequelize('postgres://localhost:5432/acme_users',{
+var db = new Sequelize(process.env.DATABASE_URL,{
 	//disable logging; default: console.log
 	logging: false
 });
